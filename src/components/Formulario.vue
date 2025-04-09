@@ -98,7 +98,7 @@ export default defineComponent({
             try {
 
                 erro.value = null;
-                const response = await axios.post('https://calculadorarescisao.site/rescisao/calcular', formData.value);
+                const response = await axios.post('https://www.calculadorarescisao.site/rescisao/calcular', formData.value);
                 resultado.value = response.data;
             } catch (error: any) {
                 console.error("Erro ao calcular rescisão:", error);
