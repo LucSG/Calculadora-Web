@@ -5,8 +5,10 @@
         <div v-if="resultado" class="resultado-container">
             <div class="coluna-proventos">
                 <h2>Proventos</h2>
-                <div class="resultado-item" v-for="(value, key) in proventos" :key="key">
-                    <span class="resultado-label">{{ getLabel(key) }}:</span>
+                <div class="resultado-item" v-for="(value, key) in resultado" :key="key">
+                    <span class="resultado-label">
+                        {{ typeof key === 'string' ? getLabel(key) : 'Chave Inválida' }}
+                    </span>
                     <span class="resultado-value">{{ formatValue(value) }}</span>
                 </div>
             </div>
@@ -59,7 +61,7 @@ export default defineComponent({
             delete prov.inss13;
             delete prov.irrf13;
             delete prov.totalBruto;
-            delete prov.totalLiquido; 
+            delete prov.totalLiquido;
             return prov;
         });
 
@@ -95,7 +97,7 @@ export default defineComponent({
                 avisoPrevioIndenizado: 'Aviso Prévio Indenizado',
                 totalBruto: 'Total Bruto',
                 totalLiquido: 'Total Líquido a Receber'
-                
+
             };
             return labels[key] || key; // Retorna o label mapeado ou a chave original se não houver mapeamento
         },

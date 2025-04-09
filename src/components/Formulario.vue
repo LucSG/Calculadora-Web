@@ -118,6 +118,7 @@ export default defineComponent({
             resultado,
             erro,
             calcularRescisao,
+            carregando,
         };
     },
 });
