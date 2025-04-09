@@ -61,6 +61,22 @@ interface RescisaoResultado {
     totalLiquido: number;
 }
 
+interface RescisaoResultado {
+    saldoSalario: number;
+    inssSalario: number;
+    irrfSalario: number;
+    decimoTerceiroProporcional: number;
+    inss13: number;
+    irrf13: number;
+    feriasVencidas: number;
+    umTercoFerias: number;
+    feriasProporcionais: number;
+    umTercoFeriasProporcionais: number;
+    avisoPrevioIndenizado: number;
+    totalBruto: number;
+    totalLiquido: number;
+}
+
 export default defineComponent({
     name: 'ResultadoRescisao',
     props: {
