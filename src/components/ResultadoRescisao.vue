@@ -43,7 +43,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, computed } from 'vue';
+import { defineComponent, type PropType, computed } from 'vue';
 
 interface RescisaoResultado {
     saldoSalario: number;
@@ -148,3 +148,5 @@ export default defineComponent({
 <style scoped>
 /* Estilos */
 </style>
+
+
