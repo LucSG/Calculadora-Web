@@ -5,10 +5,8 @@
         <div v-if="resultado" class="resultado-container">
             <div class="coluna-proventos">
                 <h2>Proventos</h2>
-                <div class="resultado-item" v-for="(value, key) in resultado" :key="key">
-                    <span class="resultado-label">
-                        {{ typeof key === 'string' ? getLabel(key) : 'Chave Inválida' }}
-                    </span>
+                <div class="resultado-item" v-for="(value, key) in proventos" :key="key">
+                    <span class="resultado-label">{{ getLabel(key) }}:</span>
                     <span class="resultado-value">{{ formatValue(value) }}</span>
                 </div>
             </div>
@@ -28,6 +26,10 @@
                     <span class="resultado-value">{{ formatValue(resultado.totalBruto) }}</span>
                 </div>
                 <div class="resultado-item">
+                    <span class="resultado-label">Total de Descontos:</span>
+                    <span class="resultado-value">{{ formatValue(totalDescontos) }}</span>
+                </div>
+                <div class="resultado-item">
                     <span class="resultado-label">{{ getLabel('totalLiquido') }}:</span>
                     <span class="resultado-value">{{ formatValue(resultado.totalLiquido) }}</span>
                 </div>
@@ -41,13 +43,29 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, type PropType, computed } from 'vue';
+import { defineComponent, PropType, computed } from 'vue';
+
+interface RescisaoResultado {
+    saldoSalario: number;
+    inssSalario: number;
+    irrfSalario: number;
+    decimoTerceiroProporcional: number;
+    inss13: number;
+    irrf13: number;
+    feriasVencidas: number;
+    umTercoFerias: number;
+    feriasProporcionais: number;
+    umTercoFeriasProporcionais: number;
+    avisoPrevioIndenizado: number;
+    totalBruto: number;
+    totalLiquido: number;
+}
 
 export default defineComponent({
     name: 'ResultadoRescisao',
     props: {
         resultado: {
-            type: Object as PropType<any>,
+            type: Object as PropType<RescisaoResultado>,
             required: false,
             default: null
         }
@@ -55,13 +73,7 @@ export default defineComponent({
     setup(props) {
         const proventos = computed(() => {
             if (!props.resultado) return {};
-            const prov = { ...props.resultado }; // Copia para não modificar o original
-            delete prov.inssSalario;
-            delete prov.irrfSalario;
-            delete prov.inss13;
-            delete prov.irrf13;
-            delete prov.totalBruto;
-            delete prov.totalLiquido;
+            const { inssSalario, irrfSalario, inss13, irrf13, totalBruto, totalLiquido, ...prov } = props.resultado;
             return prov;
         });
 
@@ -75,9 +87,20 @@ export default defineComponent({
             };
         });
 
+        const totalDescontos = computed(() => {
+            if (!props.resultado) return 0;
+            return (
+                (props.resultado.inssSalario || 0) +
+                (props.resultado.irrfSalario || 0) +
+                (props.resultado.inss13 || 0) +
+                (props.resultado.irrf13 || 0)
+            );
+        });
+
         return {
             proventos,
-            descontos
+            descontos,
+            totalDescontos
         };
     },
     methods: {
@@ -97,9 +120,8 @@ export default defineComponent({
                 avisoPrevioIndenizado: 'Aviso Prévio Indenizado',
                 totalBruto: 'Total Bruto',
                 totalLiquido: 'Total Líquido a Receber'
-
             };
-            return labels[key] || key; // Retorna o label mapeado ou a chave original se não houver mapeamento
+            return labels[key] || key;
         },
         formatValue(value: any): string {
             if (typeof value === 'number') {
@@ -118,60 +140,5 @@ export default defineComponent({
 </script>
 
 <style scoped>
-/*Sim eu sou pessimo com CSS, mas eu tento fazer o melhor que posso*/
-.resultado-page {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-}
-
-.resultado-container {
-    display: flex;
-    width: 100%;
-    max-width: 1400px;
-    justify-content: space-around;
-}
-
-.coluna-proventos,
-.coluna-descontos,
-.coluna-totais {
-    width: 30%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* Centraliza os itens verticalmente */
-}
-
-.coluna-proventos h2,
-.coluna-descontos h2,
-.coluna-totais h2 {
-    text-align: center;
-    /* Centraliza o texto dos títulos */
-}
-
-.resultado-item {
-    display: flex;
-    width: 100%;
-    margin-bottom: 5px;
-    align-items: baseline;
-    white-space: nowrap;
-}
-
-.resultado-label {
-    font-weight: bold;
-    width: 250px;
-    text-align: right;
-    margin-right: 10px;
-}
-
-.resultado-value {
-    flex-grow: 1;
-    text-align: left;
-}
-
-/* Estilo adicional para alinhar o valor à direita */
-.coluna-totais .resultado-value {
-    text-align: right;
-}
+/* Estilos */
 </style>
