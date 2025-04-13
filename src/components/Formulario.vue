@@ -31,15 +31,15 @@
                 </div>
 
                 <div>
-                    <label for="avisoPrevio">Aviso Prévio Indenizado:</label>
+                    <label for="avisoPrevio">Aviso Prévio:</label>
                     <select id="avisoPrevio" v-model="formData.avisoPrevio" required>
-                        <option :value="true">Sim</option>
-                        <option :value="false">Não</option>
+                        <option :value="true">Indenizado</option>
+                        <option :value="false">Trabalhado</option>
                     </select>
                 </div>
 
                 <div>
-                    <label for="feriasVencidas">Férias Vencidas:</label>
+                    <label for="feriasVencidas">Tem Férias Vencidas?</label>
                     <select id="feriasVencidas" v-model="formData.feriasVencidas" required>
                         <option :value="true">Sim</option>
                         <option :value="false">Não</option>
