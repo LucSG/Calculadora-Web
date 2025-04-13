@@ -16,7 +16,8 @@
                         <option value="POR_JUSTA_CAUSA">Com Justa Causa</option>
                         <option value="PEDIDO_DEMISSAO">Pedido de Demissão</option>
                         <option value="TERMINO_CONTRATO_DE_EXPERIENCIA">Termino de Contrato de Experiência</option>
-                        <option value="RESCISAO_POR_ACORDO">Rescisão por Acordo</option>
+                        <option value="RESCISAO_ANTECIPADA_POR_PARTE_DO_EMPREGADO">Rescisão Antecipada por Parte do Empregado</option>
+                        <option value="RESCISAO_ANTECIPADA_POR_PARTE_DO_EMPREGADOR">Rescisão Antecipada por Parte do Empregador</option>
                     </select>
                 </div>
 
